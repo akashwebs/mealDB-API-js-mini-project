@@ -4,35 +4,47 @@ const searchFood = async() => {
     const srachName = srachFood.value;
 
     srachFood.value = ''
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${srachName}`
-    const res = await fetch(url)
-    const data = await res.json()
-    displayResult(data.meals)
+    if (srachName == '') {
+        alert('please enter any food name')
+    } else {
+        const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${srachName}`
+        const res = await fetch(url)
+        const data = await res.json()
+        displayResult(data.meals)
+    }
+
 
 }
 
 const displayResult = meals => {
-    const seeDatils = document.getElementById('food-details')
-    seeDatils.innerHTML = ''
 
-    const serachResult = document.getElementById('serach-result');
-    serachResult.innerHTML = ''
-    meals.forEach(meal => {
-        // console.log(meal)
-        const mealId = meal.idMeal;
-        const div = document.createElement('div');
-        div.innerHTML = `
-        <div onclick='detailsFood(${mealId})' class="card">
-            <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">${meal.strMeal}</h5>
-                <p class="card-text">${meal.strInstructions.slice(0,250)}...</p>
-            </div>
-        </div>
-        `
-        div.className = 'col'
-        serachResult.appendChild(div)
-    })
+
+    if (meals == null) {
+        alert('result not found')
+    } else {
+        const seeDatils = document.getElementById('food-details')
+        seeDatils.innerHTML = ''
+
+        const serachResult = document.getElementById('serach-result');
+        serachResult.innerHTML = ''
+        meals.forEach(meal => {
+            // console.log(meal)
+            const mealId = meal.idMeal;
+            const div = document.createElement('div');
+            div.innerHTML = `
+                    <div onclick='detailsFood(${mealId})' class="card">
+                        <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">${meal.strMeal}</h5>
+                            <p class="card-text">${meal.strInstructions.slice(0,250)}...</p>
+                        </div>
+                    </div>
+                    `
+            div.className = 'col'
+            serachResult.appendChild(div)
+        })
+
+    }
 }
 
 const detailsFood = async meal => {
@@ -58,12 +70,12 @@ const seeDatils = data => {
     const div = document.createElement('div');
     div.className = 'card';
     div.innerHTML = `
-            <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">${meal.strMeal}</h5>
-                <p class="card-text">${meal.strInstructions}</p>
-                <a href="${meal.strYoutube}" class="btn btn-primary">See Video</a>
-            </div>
-            `
+                <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${meal.strMeal}</h5>
+                    <p class="card-text">${meal.strInstructions}</p>
+                    <a href="${meal.strYoutube}" class="btn btn-primary">See Video</a>
+                </div>
+                `
     seeDatils.appendChild(div);
 }

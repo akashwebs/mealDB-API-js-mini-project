@@ -1,5 +1,9 @@
-const searchFood = async() => {
+// preloading for serach result
+const loadResult = () => {
+    document.getElementById('loading').style.display = 'none';
+}
 
+const searchFood = async() => {
     const srachFood = document.getElementById('serach-value');
     const srachName = srachFood.value;
 
@@ -7,6 +11,7 @@ const searchFood = async() => {
     if (srachName == '') {
         alert('please enter any food name')
     } else {
+
         const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${srachName}`
         const res = await fetch(url)
         const data = await res.json()
@@ -22,6 +27,7 @@ const displayResult = meals => {
     if (meals == null) {
         alert('result not found')
     } else {
+
         const seeDatils = document.getElementById('food-details')
         seeDatils.innerHTML = ''
 
